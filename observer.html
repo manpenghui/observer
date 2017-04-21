@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.js"></script>
+  <body>
+
+  </body>
+  <script type="text/javascript">
+  (function($) {
+           var o = $({});//自定义事件对象
+           $.each({
+               trigger: 'publish',
+               on: 'subscribe',
+               off: 'unsubscribe'
+           }, function(key, val) {
+               jQuery[val] = function() {
+                   o[key].apply(o, arguments);
+               };
+           });
+       })(jQuery);
+  </script>
+  <script type="text/javascript">
+
+    $.getJSON("./data.json",function(result){
+      // console.log(result);
+      $.publish('app.myevent',result);//发布了app.myevent事件
+    });
+    $.subscribe("app.myevent",function(e,result){//订阅了app.myevent事件
+      console.log(e);
+      console.log(result);
+    });
+
+
+  </script>
+</html>
